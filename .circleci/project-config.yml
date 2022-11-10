@@ -63,8 +63,8 @@ workflows:
         - << pipeline.parameters.project-one >>
         - << pipeline.parameters.run-them-all >>
     jobs:
-      - project_one
-      - build_successful
+      - project_one:
+      - build_successful:
         requires:
           - project_one
 
@@ -74,8 +74,8 @@ workflows:
         - << pipeline.parameters.project-two >>
         - << pipeline.parameters.run-them-all >>
     jobs:
-      - project_two
-      - build_successful
+      - project_two:
+      - build_successful:
         requires:
           - project_two
 
@@ -85,16 +85,16 @@ workflows:
         - << pipeline.parameters.project-three >>
         - << pipeline.parameters.run-them-all >>
     jobs:
-      - project_three
-      - build_successful
+      - project_three:
+      - build_successful:
         requires:
           - project_three
 
   build-shared-other:
     when: << pipeline.parameters.run-them-all >>
     jobs:
-      - all_projects
-      - build_successful
+      - all_projects:
+      - build_successful:
         requires:
           - all_projects
 
