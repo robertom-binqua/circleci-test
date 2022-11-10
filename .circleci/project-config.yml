@@ -65,9 +65,6 @@ workflows:
     jobs:
       - project_one:
           name: project_one
-      - build_successful:
-          requires:
-            - project_one
 
   build-2:
     when:
