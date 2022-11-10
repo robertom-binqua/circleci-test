@@ -65,8 +65,8 @@ workflows:
     jobs:
       - project_one:
       - build_successful:
-        requires:
-          - project_one
+          requires:
+            - project_one
 
   build-2:
     when:
@@ -76,8 +76,8 @@ workflows:
     jobs:
       - project_two:
       - build_successful:
-        requires:
-          - project_two
+          requires:
+            - project_two
 
   build-3:
     when:
@@ -87,15 +87,15 @@ workflows:
     jobs:
       - project_three:
       - build_successful:
-        requires:
-          - project_three
+          requires:
+            - project_three
 
   build-shared-other:
     when: << pipeline.parameters.run-them-all >>
     jobs:
       - all_projects:
       - build_successful:
-        requires:
-          - all_projects
+          requires:
+            - all_projects
 
 
