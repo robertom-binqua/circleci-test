@@ -25,26 +25,26 @@ jobs:
     steps:
       - run:
           command: |
-            echo "project one"
+            echo "project one" $GITHUB_PR_BASE_BRANCH
 
   project_two:
     executor: base
     steps:
       - run:
           command: |
-            echo "project two"
+            echo "project two" $GITHUB_PR_BASE_BRANCH
   project_three:
     executor: base
     steps:
       - run:
           command: |
-            echo "project three"
+            echo "project three" $GITHUB_PR_BASE_BRANCH
   all_projects:
     executor: base
     steps:
       - run:
           command: |
-            echo "all"   
+            echo "all"  $GITHUB_PR_BASE_BRANCH 
 
 workflows:
   build-1:
