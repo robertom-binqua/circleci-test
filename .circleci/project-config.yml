@@ -29,31 +29,54 @@ jobs:
             echo build complete successfully
 
 
-  project_one:
+  project_11:
     executor: base
     steps:
       - run:
           command: |
-            echo "project one" << pipeline.git.base_revision >>
+            echo "project 11"
 
-  project_two:
+  project_12:
     executor: base
     steps:
       - run:
           command: |
-            echo "project two" << pipeline.git.base_revision >>
-  project_three:
+            echo "project 12"
+
+  project_21:
     executor: base
     steps:
       - run:
           command: |
-            echo "project three" << pipeline.git.base_revision >>
+            echo "project 21"
+
+  project_22:
+    executor: base
+    steps:
+      - run:
+          command: |
+            echo "project 22"   
+
+  project_31:
+    executor: base
+    steps:
+      - run:
+          command: |
+            echo "project 31"
+
+  project_32:
+    executor: base
+    steps:
+      - run:
+          command: |
+            echo "project 32"
+  a
   all_projects:
     executor: base
     steps:
       - run:
           command: |
-            echo "all"  << pipeline.git.base_revision >> 
+            echo "all" 
 
 workflows:
   version: 2
@@ -63,8 +86,15 @@ workflows:
         - << pipeline.parameters.project-one >>
         - << pipeline.parameters.run-them-all >>
     jobs:
-      - project_one:
-          name: project_one
+      - project_11:
+          name: project_11
+      - project_12:
+          name: project_12
+      - build_successful:
+          requires:
+            - project_11
+            - project_12
+
 
   build-2:
     when:
@@ -72,11 +102,14 @@ workflows:
         - << pipeline.parameters.project-two >>
         - << pipeline.parameters.run-them-all >>
     jobs:
-      - project_two:
-          name: project_two
+      - project_21:
+          name: project_21
+      - project_22:
+          name: project_22
       - build_successful:
           requires:
-            - project_two
+            - project_21
+            - project_22
 
   build-3:
     when:
@@ -84,11 +117,14 @@ workflows:
         - << pipeline.parameters.project-three >>
         - << pipeline.parameters.run-them-all >>
     jobs:
-      - project_three:
-          name: project_three
+      - project_31:
+          name: project_31
+      - project_32:
+          name: project_32
       - build_successful:
           requires:
-            - project_three
+            - project_31
+            - project_32
 
   build-shared-other:
     when: << pipeline.parameters.run-them-all >>
