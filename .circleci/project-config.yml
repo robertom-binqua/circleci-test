@@ -25,26 +25,26 @@ jobs:
     steps:
       - run:
           command: |
-            echo "project one" $GITHUB_PR_BASE_BRANCH
+            echo "project one" << pipeline.git.base_revision >>
 
   project_two:
     executor: base
     steps:
       - run:
           command: |
-            echo "project two" $GITHUB_PR_BASE_BRANCH
+            echo "project two" << pipeline.git.base_revision >>
   project_three:
     executor: base
     steps:
       - run:
           command: |
-            echo "project three" $GITHUB_PR_BASE_BRANCH
+            echo "project three" << pipeline.git.base_revision >>
   all_projects:
     executor: base
     steps:
       - run:
           command: |
-            echo "all"  $GITHUB_PR_BASE_BRANCH 
+            echo "all"  << pipeline.git.base_revision >> 
 
 workflows:
   build-1:
