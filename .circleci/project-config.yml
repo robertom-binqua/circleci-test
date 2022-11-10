@@ -83,8 +83,8 @@ workflows:
     when:
       and:
         - << pipeline.parameters.project-one >>
-        - not << pipeline.parameters.project-two >>
-        - not << pipeline.parameters.project-three >>
+        - not: << pipeline.parameters.project-two >>
+        - not: << pipeline.parameters.project-three >>
     jobs:
       - project_11:
           name: project_11
@@ -100,8 +100,8 @@ workflows:
     when:
       and:
         - << pipeline.parameters.project-two >>
-        - not << pipeline.parameters.project-one >>
-        - not << pipeline.parameters.project-three >>
+        - not: << pipeline.parameters.project-one >>
+        - not: << pipeline.parameters.project-three >>
     jobs:
       - project_21:
           name: project_21
@@ -116,8 +116,8 @@ workflows:
     when:
       and:
         - << pipeline.parameters.project-three >>
-        - not << pipeline.parameters.project-one >>
-        - not << pipeline.parameters.project-two >>
+        - not: << pipeline.parameters.project-one >>
+        - not: << pipeline.parameters.project-two >>
     jobs:
       - project_31:
           name: project_31
