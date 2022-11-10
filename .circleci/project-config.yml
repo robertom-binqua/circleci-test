@@ -90,8 +90,6 @@ workflows:
           name: project_11
       - project_12:
           name: project_12
-      - project_2:
-          name: project_2
       - build_successful:
           requires:
             - project_11
