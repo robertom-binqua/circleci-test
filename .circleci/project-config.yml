@@ -20,6 +20,15 @@ parameters:
     default: false
 
 jobs:
+
+  build_successful:
+    executor: base
+    steps:
+      - run:
+          command: |
+            echo build complete successfully
+
+
   project_one:
     executor: base
     steps:
@@ -47,6 +56,7 @@ jobs:
             echo "all"  << pipeline.git.base_revision >> 
 
 workflows:
+  version: 2
   build-1:
     when:
       or:
@@ -54,6 +64,9 @@ workflows:
         - << pipeline.parameters.run-them-all >>
     jobs:
       - project_one
+      - build_successful
+        requires:
+          - project_one
 
   build-2:
     when:
@@ -62,6 +75,9 @@ workflows:
         - << pipeline.parameters.run-them-all >>
     jobs:
       - project_two
+      - build_successful
+        requires:
+          - project_two
 
   build-3:
     when:
@@ -70,8 +86,16 @@ workflows:
         - << pipeline.parameters.run-them-all >>
     jobs:
       - project_three
+      - build_successful
+        requires:
+          - project_three
 
   build-shared-other:
     when: << pipeline.parameters.run-them-all >>
     jobs:
       - all_projects
+      - build_successful
+        requires:
+          - all_projects
+
+
