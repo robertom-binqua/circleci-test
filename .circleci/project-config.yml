@@ -55,7 +55,7 @@ jobs:
     steps:
       - run:
           command: |
-            echo "project 22"   
+            adfaf
 
   project_31:
     executor: base
