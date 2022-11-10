@@ -70,7 +70,7 @@ jobs:
       - run:
           command: |
             echo "project 32"
-  a
+
   all_projects:
     executor: base
     steps:
