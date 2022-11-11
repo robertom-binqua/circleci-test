@@ -105,8 +105,8 @@ workflows:
           name: gentrack_22
       - build_successful:
           requires:
-            - project_21
-            - project_22
+            - gentrack_21
+            - gentrack_22
 
   build-all-migrations:
     when:
