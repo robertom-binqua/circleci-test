@@ -39,12 +39,6 @@ jobs:
           command: |
             echo orion completed successfully
 
-  all_migrations:
-    executor: base
-    steps:
-      - run:
-          command: |
-            echo gentrack completed successfully
 
   orion_11:
     executor: base
@@ -74,6 +68,27 @@ jobs:
           command: |
             echo "gentrack 22"
 
+  common-build:
+    executor: base
+    steps:
+      - run:
+          command: |
+            echo "common-build"
+
+  gt-build:
+    executor: base
+    steps:
+      - run:
+          command: |
+            echo "gt-build"
+
+  orion-build:
+    executor: base
+    steps:
+      - run:
+          command: |
+            echo "orion-build"
+
 workflows:
   version: 2
   build-orion-migration:
@@ -83,10 +98,19 @@ workflows:
         - not: << pipeline.parameters.build-gentrack-migration >>
         - not: << pipeline.parameters.build-all-migrations >>
     jobs:
+      - orion-build:
+          name: orion-build
+
       - orion_11:
           name: orion_11
+          requires:
+            - orion-build
+
       - orion_12:
           name: orion_12
+          requires:
+            - orion-build
+
       - build_successful:
           requires:
             - orion_11
@@ -99,10 +123,19 @@ workflows:
         - not: << pipeline.parameters.build-orion-migration >>
         - not: << pipeline.parameters.build-all-migrations >>
     jobs:
+      - gt-build:
+          name: gt-build
+
       - gentrack_21:
           name: gentrack_21
+          requires:
+            - gt-build
+
       - gentrack_22:
           name: gentrack_22
+          requires:
+            - gt-build
+
       - build_successful:
           requires:
             - gentrack_21
@@ -116,10 +149,16 @@ workflows:
             - << pipeline.parameters.build-orion-migration >>
             - << pipeline.parameters.build-gentrack-migration >>
     jobs:
+      - common-build:
+          name: common-build
       - gentrack_21:
           name: gentrack_21
+          requires:
+            - common-build
       - gentrack_22:
           name: gentrack_22
+          requires:
+            - common-build
       - gentrack:
           requires:
             - gentrack_21
@@ -127,19 +166,18 @@ workflows:
 
       - orion_11:
           name: orion_11
+          requires:
+            - common-build
       - orion_12:
           name: orion_12
+          requires:
+            - common-build
       - orion:
           requires:
             - orion_11
             - orion_12
 
-      - all_migrations:
+      - build_successful:
           requires:
             - gentrack
             - orion
-
-      - build_successful:
-          requires:
-            - all_migrations
-
