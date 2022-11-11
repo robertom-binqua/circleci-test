@@ -39,12 +39,6 @@ jobs:
           command: |
             echo orion completed successfully
 
-  all_migrations:
-    executor: base
-    steps:
-      - run:
-          command: |
-            echo gentrack completed successfully
 
   orion_11:
     executor: base
@@ -134,12 +128,7 @@ workflows:
             - orion_11
             - orion_12
 
-      - all_migrations:
+      - build_successful:
           requires:
             - gentrack
             - orion
-
-      - build_successful:
-          requires:
-            - all_migrations
-
