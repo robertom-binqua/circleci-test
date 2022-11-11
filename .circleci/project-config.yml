@@ -107,8 +107,8 @@ workflows:
       or:
         - << pipeline.parameters.build-all-migrations >>
         - and:
-          - << pipeline.parameters.build-orion-migration >>
-          - << pipeline.parameters.build-gentrack-migration >>
+            - << pipeline.parameters.build-orion-migration >>
+            - << pipeline.parameters.build-gentrack-migration >>
     jobs:
       - gentrack_21:
           name: gentrack_21
@@ -128,10 +128,10 @@ workflows:
             - orion_11
             - orion_12
 
-     - all_migrations:
-        requires:
-          - gentrack
-          - orion
+      - all_migrations:
+          requires:
+            - gentrack
+            - orion
 
       - build_successful:
           requires:
