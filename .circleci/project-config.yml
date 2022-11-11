@@ -68,26 +68,26 @@ jobs:
           command: |
             echo "gentrack 22"
 
- common-build:
-   executor: base
-   steps:
-     - run:
-         command: |
-           echo "common-build"
+  common-build:
+    executor: base
+    steps:
+      - run:
+          command: |
+            echo "common-build"
 
- gt-build:
-   executor: base
-   steps:
-     - run:
-         command: |
-           echo "gt-build"
+  gt-build:
+    executor: base
+    steps:
+      - run:
+          command: |
+            echo "gt-build"
 
- orion-build:
-   executor: base
-   steps:
-     - run:
-         command: |
-           echo "orion-build"
+  orion-build:
+    executor: base
+    steps:
+      - run:
+          command: |
+            echo "orion-build"
 
 workflows:
   version: 2
@@ -124,7 +124,7 @@ workflows:
         - not: << pipeline.parameters.build-all-migrations >>
     jobs:
       - gt-build:
-            name: gt-build
+          name: gt-build
 
       - gentrack_21:
           name: gentrack_21
