@@ -12,7 +12,7 @@ workflows:
           base-revision: main
           config-path: .circleci/project-config.yml
           mapping: |
-            project1/.* project-one true
-            project2/.* project-two true
-            project3/.* project-three true
-            shared-things/.* run-them-all true
+            orion/.* build-orion-migration true
+            consumeMigrationStatus/.* build-all-migrations true
+            gentrack/.* build-gentrack-migration true
+            shared/.* build-all-migrations true

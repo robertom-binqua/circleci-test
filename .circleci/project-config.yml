@@ -6,16 +6,13 @@ executors:
       - image: cimg/base:stable
 
 parameters:
-  project-one:
+  build-orion-migration:
     type: boolean
     default: false
-  project-two:
+  build-gentrack-migration:
     type: boolean
     default: false
-  project-three:
-    type: boolean
-    default: false
-  run-them-all:
+  build-all-migrations:
     type: boolean
     default: false
 
@@ -28,113 +25,115 @@ jobs:
           command: |
             echo build 1 completed successfully
 
-  project_11:
+  orion_11:
     executor: base
     steps:
       - run:
           command: |
-            echo "project 11"
+            echo "orion 11"
 
-  project_12:
+  orion_12:
     executor: base
     steps:
       - run:
           command: |
-            echo "project 12"
+            echo "orion 12"
 
-  project_21:
+  gentrack_21:
     executor: base
     steps:
       - run:
           command: |
-            echo "project 21"
+            echo "gentrack 21"
 
-  project_22:
+  gentrack_22:
     executor: base
     steps:
       - run:
           command: |
-            echo "project 22"
+            echo "gentrack 22"
 
-  project_31:
+  all_31:
     executor: base
     steps:
       - run:
           command: |
-            echo "project 31"
+            echo "all 31"
 
-  project_32:
+  all_32:
     executor: base
     steps:
       - run:
           command: |
-            echo "project 32"
+            echo "all 32"
 
-  all_projects:
-    executor: base
-    steps:
-      - run:
-          command: |
-            echo "all" 
 
 workflows:
   version: 2
-  build-1:
+  build-orion-migration:
     when:
       and:
-        - << pipeline.parameters.project-one >>
-        - not: << pipeline.parameters.project-two >>
-        - not: << pipeline.parameters.project-three >>
+        - << pipeline.parameters.build-orion-migration >>
+        - not: << pipeline.parameters.build-gentrack-migration >>
+        - not: << pipeline.parameters.build-all-migrations >>
     jobs:
-      - project_11:
-          name: project_11
-      - project_12:
-          name: project_12
+      - orion_11:
+          name: orion_11
+      - orion_12:
+          name: orion_12
       - build_successful:
           requires:
-            - project_11
-            - project_12
+            - orion_11
+            - orion_12
 
-
-  build-2:
+  build-gentrack-migration:
     when:
       and:
-        - << pipeline.parameters.project-two >>
-        - not: << pipeline.parameters.project-one >>
-        - not: << pipeline.parameters.project-three >>
+        - << pipeline.parameters.build-gentrack-migration >>
+        - not: << pipeline.parameters.build-orion-migration >>
+        - not: << pipeline.parameters.build-all-migrations >>
     jobs:
-      - project_21:
-          name: project_21
-      - project_22:
-          name: project_22
+      - gentrack_21:
+          name: gentrack_21
+      - gentrack_22:
+          name: gentrack_22
       - build_successful:
           requires:
             - project_21
             - project_22
 
-  build-3:
+  build-all-migrations:
     when:
-      and:
-        - << pipeline.parameters.project-three >>
-        - not: << pipeline.parameters.project-one >>
-        - not: << pipeline.parameters.project-two >>
+      or:
+        - << pipeline.parameters.build-all-migrations >>
+        - and:
+          - << pipeline.parameters.build-orion-migration >>
+          - << pipeline.parameters.build-gentrack-migration >>
     jobs:
-      - project_31:
-          name: project_31
-      - project_32:
-          name: project_32
+      - gentrack_21:
+          name: gentrack_21
+      - gentrack_22:
+          name: gentrack_22
+      - gentrack:
+          requires:
+            - gentrack_21
+            - gentrack_22
+
+      - orion_11:
+          name: orion_11
+      - orion_12:
+          name: orion_12
+      - orion:
+          requires:
+            - orion_11
+            - orion_12
+
+     - all_migrations:
+        requires:
+          - gentrack
+          - orion
+
       - build_successful:
           requires:
-            - project_31
-            - project_32
-
-  build-shared-other:
-    when: << pipeline.parameters.run-them-all >>
-    jobs:
-      - all_projects:
-          name: all_projects
-      - build_successful:
-          requires:
-            - all_projects
-
+            - all_migrations
 
