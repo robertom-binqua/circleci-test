@@ -25,6 +25,27 @@ jobs:
           command: |
             echo build 1 completed successfully
 
+  gentrack:
+    executor: base
+    steps:
+      - run:
+          command: |
+            echo gentrack completed successfully
+
+  orion:
+    executor: base
+    steps:
+      - run:
+          command: |
+            echo orion completed successfully
+
+  all_migrations:
+    executor: base
+    steps:
+      - run:
+          command: |
+            echo gentrack completed successfully
+
   orion_11:
     executor: base
     steps:
@@ -52,21 +73,6 @@ jobs:
       - run:
           command: |
             echo "gentrack 22"
-
-  all_31:
-    executor: base
-    steps:
-      - run:
-          command: |
-            echo "all 31"
-
-  all_32:
-    executor: base
-    steps:
-      - run:
-          command: |
-            echo "all 32"
-
 
 workflows:
   version: 2
