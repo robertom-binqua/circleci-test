@@ -51,7 +51,7 @@ jobs:
     steps:
       - run:
           command: |
-            echo "orion 11"
+            adfdad
 
   orion_12:
     executor: base
@@ -65,7 +65,7 @@ jobs:
     steps:
       - run:
           command: |
-            fdsgsgf
+            echo "gentrack 21"
 
   gentrack_22:
     executor: base
