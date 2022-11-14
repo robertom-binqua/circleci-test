@@ -117,8 +117,7 @@ workflows:
             - orion-build
 
       - build_successful:
-          parameters:
-            scalaModuleName: orion
+          scalaModuleName: orion
           requires:
             - orion_11
             - orion_12
@@ -144,8 +143,7 @@ workflows:
             - gt-build
 
       - build_successful:
-          parameters:
-            scalaModuleName: gentrack
+          scalaModuleName: gentrack
           requires:
             - gentrack_21
             - gentrack_22
@@ -187,8 +185,7 @@ workflows:
             - orion_12
 
       - build_successful:
-          parameters:
-            scalaModuleName: "gentrack and orion"
+          scalaModuleName: "gentrack and orion"
           requires:
             - gentrack
             - orion
