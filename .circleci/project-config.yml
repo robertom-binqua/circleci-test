@@ -19,11 +19,16 @@ parameters:
 jobs:
 
   build_successful:
+    parameters:
+      scalaModuleName:
+        description: this is a test
+        type: string
     executor: base
     steps:
       - run:
-          command: |
-            echo build 1 completed successfully
+          command: ./.circleci/bin/common/publish-docker-image-to-ecr.sh  << parameters.scalaModuleName >>
+      - run:
+          command: echo build 1 completed successfully
 
   gentrack:
     executor: base
@@ -112,6 +117,8 @@ workflows:
             - orion-build
 
       - build_successful:
+          parameters:
+            scalaModuleName: orion
           requires:
             - orion_11
             - orion_12
@@ -137,6 +144,8 @@ workflows:
             - gt-build
 
       - build_successful:
+          parameters:
+            scalaModuleName: gentrack
           requires:
             - gentrack_21
             - gentrack_22
@@ -178,6 +187,8 @@ workflows:
             - orion_12
 
       - build_successful:
+          parameters:
+            scalaModuleName: "gentrack and orion"
           requires:
             - gentrack
             - orion
