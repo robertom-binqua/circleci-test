@@ -25,6 +25,7 @@ jobs:
         type: string
     executor: base
     steps:
+      - checkout
       - run:
           command: ./.circleci/bin/common/publish-docker-image-to-ecr.sh  << parameters.scalaModuleName >>
       - run:
