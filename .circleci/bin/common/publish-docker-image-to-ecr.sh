@@ -2,7 +2,7 @@
 
 set -eE
 
-echo $pwd
+echo "$pwd"
 
 source ./.circleci/bin/common/util.sh
 
